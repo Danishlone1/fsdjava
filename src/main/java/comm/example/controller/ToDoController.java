@@ -26,8 +26,8 @@ public class ToDoController {
     }
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
-        dataBinder.registerCustomEditor(Date.class,new CustomDateEditor(dateFormat,false));
+//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+//        dataBinder.registerCustomEditor(Date.class,new CustomDateEditor(dateFormat,false));
 
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 
@@ -51,17 +51,20 @@ public class ToDoController {
         return "todo-form";
 
     }
-    @RequestMapping("/saveCustomer")
-    public String saveToDo(@ModelAttribute("todo") ToDo toDo)
-    {
-        toDoService.createToDo(toDo);
-        return "redirect:/todo/listToDo";
+    @RequestMapping("/saveToDo")
+    public String saveToDo(@Valid@ModelAttribute("todo") ToDo toDo,BindingResult theBindingResult) {
+        if (theBindingResult.hasErrors()) {
+            return "todo-form";
+        } else {
+            toDoService.createToDo(toDo);
+            return "redirect:/todo/listToDo";
+        }
     }
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("todoId") int theId,
                                     Model theModel) {
 
-        // get the customer from our service
+        // get the todo from our service
         ToDo thetodo = toDoService.geToDo(theId);
 
         // set customer as a model attribute to pre-populate the form
@@ -70,7 +73,7 @@ public class ToDoController {
         // send over to our form
         return "todo-form";
     }
-    @RequestMapping("/updateCustomer")
+    @RequestMapping("/updateToDo")
     public String updateToDO(@Valid @ModelAttribute("todo") ToDo toDo,
                              BindingResult theBindingResult ) {
         if (theBindingResult.hasErrors()) {

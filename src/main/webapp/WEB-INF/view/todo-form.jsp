@@ -31,7 +31,7 @@
 <div id="container">
     <h3>Save todo</h3>
 
-    <form:form action="saveCustomer" modelAttribute="todo" method="POST">
+    <form:form action="saveTodo" modelAttribute="todo" method="POST">
         <form:hidden path="id" />
         <div class="form-group">
             <label>description:</label>
@@ -43,17 +43,12 @@
 
         <br/>
         <div class="form-group">
-            <label path = "datepicker">Date </label>
-            <input path = "datepicker" type="text" class="form-control"
-                   required="required" >
+            <label >Date </label>
+            <form:input path = "datepicker" type="date"
+                   required="required" />
 
-            <script>  $('#sandbox-container input').datepicker({
-                format: "yyyy-mm-dd"
-            });
-            $( "#datepicker" ).datepicker();
 
-            </script>
-            <form:input path="date"/>
+
 
         </div>
         <br/>
